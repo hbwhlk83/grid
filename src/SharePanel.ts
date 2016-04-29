@@ -16,7 +16,7 @@ module Grid {
 		}
 		
         private shareData = {
-            "title": "蛋蛋奇货",
+            "title": "蛋蛋奇货百万壕礼欢乐送",
             "desc": "来蛋蛋奇货，开心抽壕礼",
             "imageUrl": "http://s.adesk.com/game/gridshare/imageurl.jpg",
             "url": "http://s.adesk.com/game/gridshare/"
@@ -150,6 +150,9 @@ module Grid {
 		    var tagret:egret.Sprite = event.target;
             for(let i = 0;i < this.shareButtons.length; i++) {
                 if(tagret == this.shareButtons[i]) {
+                    if(window.ga) {
+                        window.ga('send','event','gridlottery','share_click');
+                    }
                     var tchannel: string = this.shareChanels[i].channel;
                     Grid.GameData.getInstance().channel = "?channel=" + tchannel;
                     window["lotteryshared"] = function() { 

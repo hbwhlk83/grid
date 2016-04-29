@@ -150,6 +150,14 @@ module Grid {
             var request = <egret.HttpRequest>event.currentTarget;
             Grid.GameData.getInstance().data = JSON.parse(request.response);
             if(this.checkState(Grid.GameData.getInstance().data)) {
+                if(window.ga) {
+                    window.ga('send','event','gridlottery','start');
+                }
+                if (Grid.GameData.getInstance().prize > 1) {
+                    if(window.ga) {
+                        window.ga('send','event','gridlottery','win');
+                    }
+                }
                 this.units[this.index].addChild(this.bgmask);
                 this.roll();
             }
@@ -216,6 +224,9 @@ module Grid {
         }
      
         private startGame(touchEvt: egret.TouchEvent): void {
+            if(window.ga) {
+                window.ga('send','event','gridlottery','go_click');
+            }
             this.sprBegin.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.startGame,this);
             this.count = this.units.length;
             this.speed = 100;
@@ -234,8 +245,7 @@ module Grid {
         
         private roll() {
             this.times += 1;
-            if (this.bgmask.parent == this.units[this.index])
-                this.units[this.index].removeChild(this.bgmask);
+            this.units[this.index].removeChild(this.bgmask);
             this.index += 1;
             if(this.index > this.count - 1)
                 this.index = 0;
